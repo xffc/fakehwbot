@@ -1,6 +1,7 @@
 API_ENABLED: bool = False
 API_HOST: str = "0.0.0.0"
 API_PORT: int = 8888
+API_ROOT_PATH: str = "" # example: /fakehwbot
 API_DISPLAY: str = "https://example.com"
 
 THRONE_VER: str = "1.3.2"

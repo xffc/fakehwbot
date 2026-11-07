@@ -1,10 +1,10 @@
 from fastapi import FastAPI, HTTPException, status, Response
 from requests import RequestException
 from data import get_tokenuser
-from config import API_HOST, API_PORT
+from config import API_HOST, API_PORT, API_ROOT_PATH
 from uvicorn import Config, Server
 
-app = FastAPI()
+app = FastAPI(root_path=API_ROOT_PATH)
 
 @app.api_route("/user/{token}/subs")
 async def get_user_subs(token: str):
