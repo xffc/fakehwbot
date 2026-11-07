@@ -15,8 +15,8 @@ Available endpoints can be found at `/redoc` (on the API itself).
 ## Installation (self-hosted)
 1. Clone the repository
 2. Install the packages `aiogram, aiosqlite, cachetools, requests`
-2.1 If you plan to use a proxy for Telegram, install `aiohttp_socks`
-2.2 If you plan to enable the API, additionally install: `fastapi, uvicorn`
+   - If you plan to use a proxy for Telegram, install `aiohttp_socks`
+   - If you plan to enable the API, additionally install: `fastapi, uvicorn`
 3. Modify `config.py` as needed
 4. Run `bot.py`
 
