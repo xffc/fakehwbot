@@ -6,6 +6,7 @@ API_DISPLAY: str = "https://example.com"
 
 THRONE_VER: str = "1.3.2"
 HAPP_VER: str = "4.7.2/2610301207508"
+INCY_VER: str = "3.9.0"
 
 HEADERS: dict[str, dict[str, str]] = {
     "singbox": {
@@ -23,6 +24,16 @@ HEADERS: dict[str, dict[str, str]] = {
         "X-Device-Locale": "RU",
         "User-Agent": f"Happ/{HAPP_VER.split("/")[0]}/Windows/{HAPP_VER.split("/")[1]}",
         "X-App-Version": HAPP_VER.split("/")[0]
+    },
+    "incy": {
+        "user-Agent": f"INCY/{INCY_VER}/windows 11 Dalvik/21.0.12+8-LTS",
+        "x-app-version": INCY_VER,
+        "x-device-locale": "en_US",
+        "x-client": "INCY",
+        "x-hwid": "3F44988F-2F17-9150-E6DE-6C033886C054",
+        "x-device-os": "Windows 11",
+        "x-ver-os": "10.0",
+        "x-device-model": "Windows 11 amd64"
     }
 }
 

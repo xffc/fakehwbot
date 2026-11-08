@@ -43,13 +43,19 @@ To modify subscriptions use:
 
 {api_text}
 <b>🔖 Current HWID</b>
-1. Throne {THRONE_VER} (/singbox): <code>hwid={HEADERS['singbox']['x-hwid']},os={HEADERS['singbox']['x-device-os']},osVersion={HEADERS['singbox']['x-ver-os']},model={HEADERS['singbox']['x-device-model']}</code>
+1. Throne {THRONE_VER} (/singbox): <pre>hwid={HEADERS['singbox']['x-hwid']},os={HEADERS['singbox']['x-device-os']},osVersion={HEADERS['singbox']['x-ver-os']},model={HEADERS['singbox']['x-device-model']}
+</pre>
 2. Happ: <pre>Locale: {HEADERS['happ']['X-Device-Locale']}
 OS: {HEADERS['happ']['X-Device-Os']} (version: {HEADERS['happ']['X-Ver-Os']})
 Device Model: {HEADERS['happ']['X-Device-Model']}
 HWID: {HEADERS['happ']['X-Hwid']}
 Happ version: {HAPP_VER}
-</pre>""", reply_markup=keyboard, parse_mode="HTML")
+</pre>
+3. Incy: <pre>Locale: {HEADERS['incy']['x-device-locale']}
+OS: {HEADERS['incy']['x-device-os']} (version: {HEADERS['incy']['x-ver-os']})
+Device Model: {HEADERS['incy']['x-device-model']}
+HWID: {HEADERS['incy']['x-hwid']}
+Client: {HEADERS['incy']['x-client']} {HEADERS['incy']['x-app-version']}</pre>""", reply_markup=keyboard, parse_mode="HTML")
 
 @dp.message(Command("api"))
 async def api_command(msg: Message):
@@ -132,15 +138,15 @@ async def on_callback_query(callback: CallbackQuery):
         try:
             res = sub.send_request()
         except RequestException:
-            return await callback.answer("Failed to get profiles")
+            return await callback.answer("Failed to get profiles", show_alert=True)
         
         buf: bytes
         if sub.headers == "singbox":
             buf = b64decode(res.content)
-        elif sub.headers == "happ":
+        elif sub.headers == "happ" or sub.headers == "incy":
             buf = res.text.encode()
         else:
-            return await callback.answer("Invalid headers")
+            return await callback.answer("Invalid headers", show_alert=True)
         
         filename = f"subexport ({strftime("%m-%d %H.%M.%S")}).txt"
         return await bot.send_document(message.chat.id, BufferedInputFile(buf, filename))
