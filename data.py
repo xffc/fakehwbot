@@ -1,4 +1,4 @@
-import aiosqlite, requests
+import aiosqlite, aiohttp
 from config import HEADERS, REQ_PROXIES
 from secrets import token_urlsafe
 from dataclasses import dataclass
@@ -18,8 +18,8 @@ class Subscription:
         data = (self.link + self.headers).encode()
         return length_as_bytes + data
     
-    def send_request(self) -> requests.Response:
-        return requests.get(self.link, headers=HEADERS[self.headers], proxies=REQ_PROXIES)
+    async def send_request(self, session: aiohttp.ClientSession) -> aiohttp.ClientResponse:
+        return await session.get(self.link, headers=HEADERS[self.headers], proxy=REQ_PROXIES)
     
     def __str__(self) -> str:
         return f"{self.link} ({self.headers})"

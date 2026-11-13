@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException, status, Response
-from requests import RequestException
 from data import get_tokenuser
+from aiohttp import ClientSession
 from config import API_HOST, API_PORT, API_ROOT_PATH
 from uvicorn import Config, Server
 
@@ -19,12 +19,14 @@ async def get_user_sub(token: str, index: int):
     if user == None:
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "User not found (invalid token)")
     
-    if index < 0 or index + 1> len(user.subscriptions):
+    index -= 1
+    if index < 0 or index + 1 > len(user.subscriptions):
         raise HTTPException(status.HTTP_404_NOT_FOUND, "Invalid index")
     sub = user.subscriptions[index]
     try:
-        content = sub.send_request().content
-    except RequestException:
+        async with ClientSession() as session:
+            content = await (await sub.send_request(session)).text()
+    except Exception:
         raise HTTPException(status.HTTP_400_BAD_REQUEST)
     
     return Response(content)
