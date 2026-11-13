@@ -14,7 +14,7 @@ HEADERS: dict[str, dict[str, str]] = {
         "x-device-os": "Android",
         "x-ver-os": "16",
         "x-device-model": "motorola edge 70 max",
-        "User-Agent": f"Throne/{THRONE_VER}",
+        "User-Agent": f"Throne/{THRONE_VER}"
     },
     "happ": {
         "X-Device-Os": "Windows",
@@ -41,7 +41,4 @@ TOKEN: str = "TELEGRAM_BOT_TOKEN"
 
 BOT_PROXY: str | None = None # example: "http://127.0.0.1:10808"
 
-REQ_PROXIES: dict[str, str] = {
-    #"http": "http://127.0.0.1:10808",
-    #"https": "https://127.0.0.1:10808"
-}
+REQ_PROXIES: str | None = None # example: "http://127.0.0.1:10808"
